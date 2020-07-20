@@ -18,6 +18,7 @@ class CreatePhotosTable extends Migration
             $table->integer('album_id')->unsigned();
             $table->string('name');
             $table->boolean('status');
+            $table->string('image');
             $table->timestamps();
             $table->foreign('album_id')
                 ->references('id')

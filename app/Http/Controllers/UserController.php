@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,9 +12,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $users = User::query()
+            ->orderBy('nome')
+            ->get();
+        $mensagem = $request->session()->get( 'mensagem');
+        return view(route('user_index'), compact('users', 'mensagem'));
+
     }
 
     /**
@@ -23,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('register');
     }
 
     /**
