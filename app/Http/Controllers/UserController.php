@@ -15,9 +15,9 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $users = User::query()
-            ->orderBy('nome')
+            ->orderBy('name')
             ->get();
-        $mensagem = $request->session()->get( 'mensagem');
+        $mensagem = $request->session()->get( 'Lista de Clientes');
         return view(route('user_index'), compact('users', 'mensagem'));
 
     }
