@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 /** @var \Laravel\Lumen\Routing\Router $router */
+Route::get('/', function () { return view('welcome'); });
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
 
 Route::get('/studio', 'HomeController@index')->name('home');
 

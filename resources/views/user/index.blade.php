@@ -1,8 +1,8 @@
-@extends('layouts.layout')
+@extends('layouts')
 
 
 @section('cabecalho')
-    Séries
+    Clientes
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         {{$mensagem}}
     </div>
 
-    <a href="{{route('user.formRegister')}}" class="btn btn-dark mb-2">Adicionar</a>
+    <a href="{{route('user.register')}}" class="btn btn-dark mb-2">Adicionar</a>
 
     <ul class="list-group">
         @foreach($users as $user)

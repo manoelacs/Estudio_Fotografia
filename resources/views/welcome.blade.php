@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Studio Fotográfico</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -69,7 +69,7 @@
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
-                    @else
+                        @else
                         <a href="{{ route('login') }}">Login</a>
 
                         @if (Route::has('register'))
@@ -81,16 +81,16 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Studio Fotográfico
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
+                    <a href="https://laravel.com/docs">Casamentos</a>
+                    <a href="https://laracasts.com">Eventos</a>
+                    <a href="https://laravel-news.com">Formatura</a>
+                    <a href="https://blog.laravel.com">15 anos</a>
+                    <a href="https://nova.laravel.com">Books</a>
+                    <a href="https://forge.laravel.com"></a>
                     <a href="https://vapor.laravel.com">Vapor</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>

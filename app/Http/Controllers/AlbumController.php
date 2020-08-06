@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
@@ -13,7 +14,9 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        //
+        //list todos os albuns
+       $albuns = Album::all();
+       return view('album.index', compact('albuns'));
     }
 
     /**
@@ -23,7 +26,7 @@ class AlbumController extends Controller
      */
     public function create()
     {
-        //
+        return view('album.create');
     }
 
     /**
@@ -56,7 +59,8 @@ class AlbumController extends Controller
      */
     public function edit($id)
     {
-        //
+        $album = Album::find($id);
+        return view('album.index', compact('album'));
     }
 
     /**
@@ -68,7 +72,7 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //$product->fill($request->all());
     }
 
     /**
