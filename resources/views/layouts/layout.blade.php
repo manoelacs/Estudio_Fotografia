@@ -13,7 +13,11 @@
 <body>
 <div class="container">
     <div class="jumbotron">
+<<<<<<< HEAD
         <h1>@yield('cabecalho)</h1>
+=======
+        <h1>@yield('head')</h1>
+>>>>>>> crudUser
     </div>
     @yield('content')
 </div>

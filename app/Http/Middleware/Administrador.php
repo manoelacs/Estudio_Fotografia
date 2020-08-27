@@ -4,6 +4,7 @@
 namespace App\Http\Middleware;
 
 
+<<<<<<< HEAD
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Administrador extends Middleware
@@ -25,5 +26,9 @@ class Administrador extends Middleware
 
         }
     }
+=======
+class Administrador
+{
+>>>>>>> crudUser
 
 }
