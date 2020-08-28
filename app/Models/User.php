@@ -42,6 +42,23 @@ class User extends Authenticatable
     }
     public function isAdmin()
     {
-        return $this->roles()->where('role_id', 1)->first();
+        if ($this->roles()->where('role_id', 1)->first()){
+            return true;
+        }
+        return false;
+
+    }
+    public function hasPermition(){
+        return $this->hasAnyRoles($this->roles());
+
+    }
+    public function hasAnyRoles($roles){
+        if(is_array($roles) || is_object($roles)){
+            foreach ($roles as $role){
+                return $this->role->contains('name', $role->name);
+            }
+        }
+        return $this->roles->contains('name', $roles);
+
     }
 }

@@ -49,12 +49,14 @@
                         <div class="form-group">
                             {{ Form::label(false, 'Nível de acesso') }}
                             <div class="mt-2">
-                                @foreach ($roles as $role_name => $role_label)
-                                    <div class="form-check-inline">
-                                        {{ Form::checkbox('roles[]', $role_name, false, ['class' => 'form-check-input', 'id' => $role_label.'_'.$role_name]) }}
-                                        {{ Form::label($role_label.'_'.$role_name, $role_label, ['class' => 'form-check-label']) }}
-                                    </div>
-                                @endforeach
+                                <label>
+                                    {!! Form::radio('role_id', '1', false) !!}
+                                    Admnistrador
+                                </label>
+                                <label>
+                                    {!! Form::radio('role_id', '2', true) !!}
+                                    Usuário
+                                </label>
                             </div>
                         </div>
                         <div class="form-group pt-1">

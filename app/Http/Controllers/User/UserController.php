@@ -52,11 +52,11 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $data = $request->all();
+        $inputs = $request->all();
         try {
-            $data['password'] = Hash::make($request['password']);
-            $data['phone'] = preg_replace('/[^0-9]/', '', (string)$request['phone']);
-            $user = User::create($data);
+            $inputs['password'] = Hash::make($request['password']);
+            $inputs['phone'] = preg_replace('/[^0-9]/', '', (string)$request['phone']);
+            $user = User::create($inputs);
             Flash::success('Usuário criado com sucesso.');
             return redirect()->route('users.index');
         }

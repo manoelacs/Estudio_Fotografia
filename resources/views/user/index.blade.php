@@ -1,83 +1,83 @@
-@extends('layouts')
-
-
-@section('cabecalho')
-    Clientes
-@endsection
-
+@extends('layouts.app')
+@section('title', 'Usuários')
 @section('content')
-    <div class="alert alert-session">
-        {{$mensagem}}
-    </div>
-
-    <a href="{{route('user.register')}}" class="btn btn-dark mb-2">Adicionar</a>
-
-    <ul class="list-group">
-        @foreach($users as $user)
-            <li class="list-group-item d-flex justify-content-between align-items-centers">{{ $user->name }}
-
-                <span id="nome-serie-{{ $user->id }}">{{ $serie->nome }}</span>
-
-                <div class="input-group w-50" hidden id="input-nome-serie-{{ $user->id }}">
-                    <input type="text" class="form-control" value="{{ $user->name }}">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" onclick="editarSerie({{ $user->id }})">
-                            <i class="fas fa-check"></i>
-                        </button>
-                        @csrf
-                    </div>
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>Usuários</h1>
                 </div>
 
-                <span class="d-flex">
-                    <button class="btn btn-info btn-sm mr-1" onclick="toggleInput({{ $user->id }})">
-                        <i class="fas fa-edit"></i>
-                    </button>
+                <div class="col-md-6">
+                    {{ Form::open(['action' => 'UsersController@index', 'method' => 'GET', 'class' => '']) }}
+                    <div class="input-group">
+                        {{ Form::text('q', app('request')->input('q'), ['class' => 'form-control', 'placeholder' => 'Pesquise pelo nome ou e-mail...']) }}
+                        <span class="input-group-append">
+                                {{ Form::button('<i class="fa fa-search"></i> Pesquisar', ['type' => 'submit', 'class' => 'btn btn-default']) }}
+                            </span>
+                    </div>
+                    {{ Form::close() }}
+                </div>
+            </div>
+        </div>
+    </section>
 
-
-                    <a href="/series/{{ $user->id }}/temporadas" class="btn btn-info btn-sm mr-1">
-                       <i class="fas fa-external-link-alt"></i>
-                    </a>
-                    <form method="post" action="/series/{{ $user->id}}"  onsubmit="return confirm('Tem certeza que deseja remover {{ addslashes( $serie->nome )}}?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </form>
-              </span>
-            </li>
-        @endforeach
-    </ul>
-    <script>
-        function toggleInput(serieId) {
-            const nomeSerieEl = document.getElementById(`nome-serie-${serieId}`);
-            const inputSerieEl = document.getElementById(`input-nome-serie-${serieId}`);
-            if (nomeSerieEl.hasAttribute('hidden')) {
-                nomeSerieEl.removeAttribute('hidden');
-                inputSerieEl.hidden = true;
-            } else {
-                inputSerieEl.removeAttribute('hidden');
-                nomeSerieEl.hidden = true;
-            }
-        }
-        function editarSerie(serieId) {
-            let formData = new FormData();
-            const nome = document
-                .querySelector(`#input-nome-serie-${serieId} > input`)
-                .value;
-            const token = document
-                .querySelector(`input[name="_token"]`)
-                .value;
-            formData.append('nome', nome);
-            formData.append('_token', token);
-            const url = `/series/${serieId}/editaNome`;
-            fetch(url, {
-                method: 'POST',
-                body: formData
-            }).then(() => {
-                toggleInput(serieId);
-                document.getElementById(`nome-serie-${serieId}`).textContent = nome;
-            });
-        }
-    </script>
+    <div class="content">
+        @include('flash::message')
+        <div class="clearfix"></div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-fw fa-user"></i></h3>
+                <div class="card-tools">
+                    @if(Auth::user()->isAdmin())
+                    <a href="{{ route('users.create') }}" class="btn btn-primary">Adicionar novo</a>
+                    @endif
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Level</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (@isset($users) && !$users->isEmpty())
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ implode(",", $user->getRoleNames()->all()) }}</td>
+                                <td>
+                                    {!! $user->status ? '<span class="badge bg-success">Ativo</span>' : '<span class="badge bg-danger">Inativo</span>' !!}
+                                </td>
+                                <td>
+                                    @hasanyrole('root|admin')
+                                    <a href="{{ route('users.edit', $user->id) }}">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>
+                                    {!! Form::open(['route' => ['users.destroy', $user->id], 'method' => 'DELETE', 'style="display: inline-block"', 'id' => 'delete-user-form-'.$user->id]) !!}
+                                    <a href="#" onclick="event.preventDefault(); if(confirm('Deseja continuar?')) { document.getElementById('delete-user-form-{{ $user->id }}').submit();}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                    {!! Form::close() !!}
+                                    @endhasanyrole
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                {{ $users->links() }}
+            </div>
+        </div>
+    </div>
 @endsection
