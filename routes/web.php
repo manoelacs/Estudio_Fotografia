@@ -12,11 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+/** @var \Laravel\Lumen\Routing\Router $router */
 
 Auth::routes();
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('users', 'UsersController');
+    Route::resource('albuns', 'AlbunsController');
+    Route::resource('photos', 'PhotosController');
+    Route::resource('orders', 'OrdersController');
+});
