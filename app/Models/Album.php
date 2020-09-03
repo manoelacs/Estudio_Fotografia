@@ -11,7 +11,8 @@ use \Illuminate\Database\Eloquent\Model;
 class Album extends Model
 {
     protected $fillable = ['name', 'description', 'max_select_photos', ];
-    public $timestamps = false;
+    #public $timestamps = false;
+    protected $table = 'albuns';
 
     public function user()
     {
@@ -25,6 +26,11 @@ class Album extends Model
     }
     public function status(){
         return $this->belongsTo(Status::class, 'status_id');
+    }
+    public function statusName(){
+        $status = $this->belongsTo(Status::class, 'status_id');
+        return  $status->name;
+
     }
 
 }

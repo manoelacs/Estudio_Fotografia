@@ -1,10 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'level', 'password', 'phone'
     ];
 
     /**
@@ -25,40 +27,27 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-    public function roles()
+    public function getAuthPassword()
     {
-        return $this->belongsToMany(App\Role::class);
+        return $this->password;
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
     public function isAdmin()
     {
-        if ($this->roles()->where('role_id', 1)->first()){
-            return true;
+        $admin = $this->belongsTo(Role::class);
+        if($admin->name == 'Administrador'){
+            return $admin ;
         }
-        return false;
+        return null;
 
     }
-    public function hasPermition(){
-        return $this->hasAnyRoles($this->roles());
 
-    }
-    public function hasAnyRoles($roles){
-        if(is_array($roles) || is_object($roles)){
-            foreach ($roles as $role){
-                return $this->role->contains('name', $role->name);
-            }
-        }
-        return $this->roles->contains('name', $roles);
 
-    }
+
 }

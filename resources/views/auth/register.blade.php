@@ -1,77 +1,101 @@
-@extends('layouts.app')
-
+@extends('layouts.auth')
+@section('title', 'Cadastro')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+    <div class="register-box">
+        <div class="register-logo">
+            <a href="{{ route('home') }}"><b>Bingo</b> Admin</a>
+        </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Preencha seus dados</p>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                <form action="{{ route('register') }}" method="post" class="mb-5">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <input id="name" type="text" placeholder="Informe o nome" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                        @enderror
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="phone" type="text" placeholder="Informe seu telefone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-phone"></span>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                        @enderror
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="email" type="email" placeholder="Informe um e-mail" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                        @enderror
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="password" type="password" placeholder="Informe uma senha" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
                             </div>
                         </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                        @enderror
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="password-confirm" type="password" placeholder="Confirme sua senha" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-5">
+                            <button type="submit" class="btn btn-primary btn-block">Criar conta</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="mt-5">
+                    <a href="{{ route('login') }}" class="text-center">Já possui conta? Faça login</a>
                 </div>
             </div>
-        </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
     </div>
-</div>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#phone').mask('(00) 00000-0000');
+        });
+    </script>
+@endpush

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
+
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\PhoneRule;
+use App\Models\User;
 
 class RegisterController extends Controller
 {
@@ -51,8 +54,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:150', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'phone' => ['required', 'string', new PhoneRule],
         ]);
     }
 
@@ -62,14 +66,22 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
-    protected function store(array $data)
+    protected function create(array $data)
     {
-        return User::create([
+        $phoneFormat = preg_replace('/[^0-9]/', '', (string) $data['phone']);
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'phone' => $phoneFormat,
         ]);
+
+        #if ($user->save() && !$user->hasRole('root')) {
+         #   $user->syncRoles('usuario');
+        #}
+
+        return $user;
     }
 }

@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <h1>Adicionar Album</h1>
+                    <h1>Adicionar Álbum</h1>
                 </div>
 
                 <div class="col-md-6">
@@ -27,36 +27,44 @@
                 </div>
             </div>
             <div class="card-body">
-                {!! Form::open(['action' => 'AlbumController@store']) !!}
+                {!! Form::open(['action' => 'AlbunsController@store' ]) !!}
                 <div class="row">
                     <div class="col-md-6 pr-4">
                         <div class="form-group">
-                            {{ Form::label('price', 'Preço:') }}
-                            {{ Form::text('price', null, ['class' => 'form-control', 'id' => 'preco', 'placeholder' => 'Ex: R$11,00']) }}
+                            <div class="form-group">
+                                {{ Form::label('name', 'Nome:') }}
+                                {{ Form::text('name', null, ['class' => 'form-control']) }}
+                            </div>
                         </div>
                         <div class="form-group">
-                            {{ Form::label('premium', 'Premium:') }}
-                            {{ Form::text('premium', null, ['class' => 'form-control', 'id' => 'premium_price', 'placeholder' => 'Ex: R$12,90']) }}
+                            {{ Form::label('description', 'Descrição:') }}
+                            {{ Form::textarea('description', null, [
+                                                'class' => 'form-control',
+                                                'id' => 'description_id',
+                                                'placeholder' => 'Descreva seu álbum ...'
+                                                ]
+                             )}}
                         </div>
                     </div>
                     <div class="col-md-6 pl-4">
+
                         <div class="form-group">
                             {{ Form::label('user_id', 'Usuário:') }}
                             {{ Form::select('user_id', $users, null, ['class' => 'form-control', 'placeholder' => 'Selecione...']) }}
                         </div>
                         <div class="form-group">
-                            {{ Form::label('status', 'Status:') }}
+
                             <div>
-                                {{ Form::hidden('status', 0) }}
-                                {{ Form::checkbox('status', 1, 1) }}
+                                {{ Form::hidden('status_id', 0) }}
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-12 text-right">
-                        <a href="{{ route('cards.index') }}" class="btn btn-danger">Cancelar</a>
-                        {{ Form::submit('Adicionar cartela', ['class' => 'btn btn-primary']) }}
+                        <a href="{{ route('album.index') }}" class="btn btn-danger">Cancelar</a>
+                        {{ Form::submit('Adicionar Álbum', ['class' => 'btn btn-primary']) }}
                     </div>
                 </div>
                 {!! Form::close() !!}
