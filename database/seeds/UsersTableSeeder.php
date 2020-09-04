@@ -21,14 +21,14 @@ class UsersTableSeeder extends Seeder
             'name'      => 'Manoela',
             'email'     => 'aleonamaissac@gmail.com',
             'phone'      =>'82996089487',
-            'password'  => bcrypt('123456'),
+            'password'  => bcrypt('12345678'),
             'role_id'   => 1
         ],
             [
                 'name'      => 'test',
                 'email'     => 'test@gmail.com',
                 'phone'     => '99999999999',
-                'password'  => bcrypt('test'),
+                'password'  => bcrypt('test1234'),
                 'role_id'   => 2
             ]
         );

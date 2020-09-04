@@ -7,7 +7,7 @@ use App\Models\Album;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laracasts\Flash\Flash;
-
+use App\Models\User;
 class AlbunsController extends Controller
 {
     /**
@@ -39,7 +39,7 @@ class AlbunsController extends Controller
     public function create()
     {
         $users = User::all()->pluck('name', 'id');
-        return view('albuns.create', compact('users'));
+        return view('album.create', compact('users'));
     }
 
     /**
@@ -54,7 +54,7 @@ class AlbunsController extends Controller
         try {
             $album = Album::create($inputs);
             Flash::success('Album criado com sucesso.');
-            return redirect()->route('albuns.show', compact('album->id'));
+            return redirect()->route('albuns.show', compact('id', $album->id));
         }
         catch (\Exception $exception){
             Flash::error($exception->getMessage());
@@ -71,7 +71,7 @@ class AlbunsController extends Controller
     public function show($id)
     {
         $album = Album::findOrFail($id);
-        return view('albuns.show', compact('album'));
+        return view('albuns.show', compact('album', $album));
 
     }
 
@@ -84,7 +84,7 @@ class AlbunsController extends Controller
     public function edit($id)
     {
         $album = Album::findOrFail($id);
-        return view('albuns.update', compact('album'));
+        return view('albuns.update', compact('album', $album));
     }
 
     /**

@@ -3,7 +3,7 @@
 @section('content')
     <div class="register-box">
         <div class="register-logo">
-            <a href="{{ route('home') }}"><b>Bingo</b> Admin</a>
+            <a href="{{ route('home') }}"><b>Studio</b> Fotográfico</a>
         </div>
 
         <div class="card">
